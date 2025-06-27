@@ -7,7 +7,7 @@ return {
     },
     config = function()
       require("mason-lspconfig").setup {
-        ensure_installed = { "ts_ls", "lua_ls" }
+        ensure_installed = { "ts_ls", "lua_ls", "biome" }
       }
 
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
