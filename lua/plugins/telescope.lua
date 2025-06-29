@@ -1,8 +1,11 @@
 return {
-	'nvim-telescope/telescope.nvim', tag = '0.1.8',
-	dependencies = { 'nvim-lua/plenary.nvim' },
-  config = function ()
-    vim.keymap.set('n', '<leader>gs', '<cmd>Telescope git_status<CR>')
-    vim.keymap.set('n', '<leader>gc', '<cmd>Telescope git_commits<CR>')
-  end
+  "nvim-telescope/telescope.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  keys = {
+    { "<leader>ff", "<cmd>Telescope find_files<CR>",  desc = "Telescope find files" },
+    { "<leader>fg", "<cmd>Telescope live_grep<CR>",   desc = "Telescope live grep" },
+    { "<leader>fb", "<cmd>Telescope buffers<CR>",     desc = "Telescope buffers" },
+    { "<leader>fh", "<cmd>Telescope help_tags<CR>",   desc = "Telescope help tags" },
+    { "<leader>vc", "<cmd>Telescope git_commits<CR>", desc = "Telescope git commits" },
+  },
 }
