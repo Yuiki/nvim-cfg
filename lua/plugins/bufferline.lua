@@ -6,6 +6,9 @@ return {
 	keys = {
 		{ "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
 		{ "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Previous buffer" },
-		{ "<leader>x", "<Cmd>bdelete<CR>", desc = "Delete buffer" },
+		{ "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Close other buffers" },
+		{ "<leader>br", "<Cmd>BufferLineCloseRight<CR>", desc = "Close buffers to the right" },
+		{ "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", desc = "Close buffers to the left" },
+		{ "<leader>bd", "<Cmd>bdelete<CR>", desc = "Close current buffer" },
 	},
 }

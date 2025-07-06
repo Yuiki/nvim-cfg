@@ -7,6 +7,8 @@ vim.opt.showmode = false
 vim.opt.cmdheight = 0
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
+vim.opt.autoread = true
+vim.opt.title = true
 
 vim.g.mapleader = " "
 vim.g.loaded_netrw = 1
