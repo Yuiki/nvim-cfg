@@ -12,6 +12,9 @@ return {
 			custom = { "^.git$" },
 			git_ignored = false,
 		},
+		renderer = {
+			group_empty = true,
+		},
 	},
 	keys = {
 		{

@@ -1,5 +1,6 @@
 return {
   "mason-org/mason-lspconfig.nvim",
+  event = "BufReadPre",
   opts = {
     ensure_installed = { "ts_ls", "lua_ls", "biome", "terraformls", "kotlin_lsp", "cssls" },
   },
@@ -21,7 +22,7 @@ return {
           inlayHints = {
             includeInlayParameterNameHints = "literals",
             includeInlayVariableTypeHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
+            -- includeInlayFunctionLikeReturnTypeHints = true,
           },
         },
       },

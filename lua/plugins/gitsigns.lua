@@ -6,5 +6,9 @@ return {
 		current_line_blame_opts = {
 			delay = 300,
 		},
+		gh = true,
+	},
+	keys = {
+		{ "<leader>vb", "<cmd>Gitsigns blame_line<cr>", desc = "Blame Line" },
 	},
 }

@@ -8,6 +8,7 @@ vim.opt.cmdheight = 0
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.autoread = true
+vim.opt.titlestring = '%{fnamemodify(getcwd(), ":t")} - Neovim'
 vim.opt.title = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -26,23 +27,29 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
 vim.keymap.set("n", "<leader>x", ":bdelete<CR>")
 
+vim.keymap.set("n", "<leader>yp", function()
+  local relative_path = vim.fn.expand("%:~:.")
+  vim.fn.setreg("+", relative_path)
+  vim.notify("Copy: " .. relative_path)
+end, { silent = true, desc = "Copy relative path to clipboard" })
+
 vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-	callback = function()
-		vim.lsp.inlay_hint.enable(true)
-	end,
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = function()
+    vim.lsp.inlay_hint.enable(true)
+  end,
 })
 
 vim.diagnostic.config({
-	update_in_insert = true,
+  update_in_insert = true,
 })
 
 vim.diagnostic.config({
-	virtual_text = {
-		format = function(diagnostic)
-			return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
-		end,
-	},
+  virtual_text = {
+    format = function(diagnostic)
+      return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+    end,
+  },
 })
 
 require("config.lazy")

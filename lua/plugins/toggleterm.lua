@@ -3,6 +3,8 @@ return {
 	opts = {
 		open_mapping = [[<c-\>]],
 		size = 20,
+    persist_size = false,
+		auto_scroll = false,
 	},
 	keys = {
 		{ "<c-\\>", "<cmd>ToggleTerm<CR>", desc = "Toggle terminal" },
