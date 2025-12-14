@@ -28,28 +28,39 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 vim.keymap.set("n", "<leader>x", ":bdelete<CR>")
 
 vim.keymap.set("n", "<leader>yp", function()
-  local relative_path = vim.fn.expand("%:~:.")
-  vim.fn.setreg("+", relative_path)
-  vim.notify("Copy: " .. relative_path)
+	local relative_path = vim.fn.expand("%:~:.")
+	vim.fn.setreg("+", relative_path)
+	vim.notify("Copy: " .. relative_path)
 end, { silent = true, desc = "Copy relative path to clipboard" })
 
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function()
-    vim.lsp.inlay_hint.enable(true)
-  end,
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	callback = function(event)
+		vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+	end,
 })
 
 vim.diagnostic.config({
-  update_in_insert = true,
-})
-
-vim.diagnostic.config({
-  virtual_text = {
-    format = function(diagnostic)
-      return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
-    end,
-  },
+	update_in_insert = true,
+	virtual_text = {
+		format = function(diagnostic)
+			return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+		end,
+	},
 })
 
 require("config.lazy")
+
+-- Auto layout: nvim-tree on left, toggleterm on bottom
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		vim.schedule(function()
+			vim.cmd("NvimTreeOpen")
+			vim.cmd("ToggleTerm")
+			-- Wait for nvim-tree to fully initialize before moving focus
+			vim.defer_fn(function()
+				vim.cmd("wincmd k")
+			end, 100)
+		end)
+	end,
+})

@@ -22,11 +22,29 @@ return {
 		{ "<leader>ll", "<cmd>LspLog<cr>", desc = "LSP Log" },
 	},
 	config = function(_, opts)
-		require("mason-lspconfig").setup(opts)
+		-- Setup additional LSP keymaps (complement Neovim 0.10+ defaults)
+		-- Defaults: grn (rename), gra (code action), grr (references), gri (implementation)
+		vim.api.nvim_create_autocmd("LspAttach", {
+			group = vim.api.nvim_create_augroup("UserLspKeymaps", {}),
+			callback = function(event)
+				local map = function(keys, func, desc)
+					vim.keymap.set("n", keys, func, { buffer = event.buf, desc = desc })
+				end
 
-		local nvim_lsp = require("lspconfig")
+				-- Additional LSP actions (not in defaults)
+				map("K", vim.lsp.buf.hover, "Hover Documentation")
+				map("gd", vim.lsp.buf.definition, "Goto Definition")
+				map("gt", vim.lsp.buf.type_definition, "Goto Type Definition")
+
+				-- Diagnostics navigation
+				map("[e", vim.diagnostic.goto_prev, "Previous Diagnostic")
+				map("]e", vim.diagnostic.goto_next, "Next Diagnostic")
+			end,
+		})
+
+		-- Configure ts_ls
 		vim.lsp.config("ts_ls", {
-			root_dir = nvim_lsp.util.root_pattern("package.json"),
+			root_markers = { "package.json" },
 			single_file_support = false,
 			settings = {
 				typescript = {
@@ -39,16 +57,21 @@ return {
 			},
 		})
 
+		-- Configure biome
 		vim.lsp.config("biome", {
-			root_dir = nvim_lsp.util.root_pattern("biome.json", "biome.jsonc"),
+			root_markers = { "biome.json", "biome.jsonc" },
 			single_file_support = false,
-			on_attach = function(client, bufnr)
-				if client.supports_method("textDocument/formatting") then
-					local augroup = vim.api.nvim_create_augroup("BiomeFormatting", {})
-					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+		})
+
+		-- Biome auto-format on save
+		vim.api.nvim_create_autocmd("LspAttach", {
+			group = vim.api.nvim_create_augroup("BiomeFormatting", {}),
+			callback = function(event)
+				local client = vim.lsp.get_client_by_id(event.data.client_id)
+				if client and client.name == "biome" and client.supports_method("textDocument/formatting") then
 					vim.api.nvim_create_autocmd("BufWritePre", {
-						group = augroup,
-						buffer = bufnr,
+						group = vim.api.nvim_create_augroup("BiomeFormatting", {}),
+						buffer = event.buf,
 						callback = function()
 							vim.lsp.buf.format({ async = false })
 						end,
@@ -56,5 +79,7 @@ return {
 				end
 			end,
 		})
+
+		require("mason-lspconfig").setup(opts)
 	end,
 }

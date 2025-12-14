@@ -3,12 +3,14 @@ return {
 	event = "InsertEnter",
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
+		"zbirenbaum/copilot-cmp",
 	},
 	config = function()
 		local cmp = require("cmp")
 		cmp.setup({
 			sources = {
-				{ name = "nvim_lsp" },
+				{ name = "copilot", group_index = 2 },
+				{ name = "nvim_lsp", group_index = 2 },
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
