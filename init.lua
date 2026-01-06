@@ -52,15 +52,19 @@ vim.diagnostic.config({
 require("config.lazy")
 
 -- Auto layout: nvim-tree on left, toggleterm on bottom
+-- Only when opening a directory
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		vim.schedule(function()
-			vim.cmd("NvimTreeOpen")
-			vim.cmd("ToggleTerm")
-			-- Wait for nvim-tree to fully initialize before moving focus
-			vim.defer_fn(function()
-				vim.cmd("wincmd k")
-			end, 100)
-		end)
+		-- Check if a directory was specified as argument
+		if vim.fn.argc() > 0 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
+			vim.schedule(function()
+				vim.cmd("NvimTreeOpen")
+				vim.cmd("ToggleTerm")
+				-- Wait for nvim-tree to fully initialize before moving focus
+				vim.defer_fn(function()
+					vim.cmd("wincmd k")
+				end, 100)
+			end)
+		end
 	end,
 })
