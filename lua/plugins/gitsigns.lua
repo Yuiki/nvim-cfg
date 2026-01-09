@@ -8,6 +8,7 @@ return {
 		},
 	},
 	keys = {
-		{ "<leader>vb", "<cmd>Gitsigns blame_line<cr>", desc = "Blame Line" },
+		{ "<leader>hb", "<cmd>Gitsigns blame_line<cr>", desc = "Blame Line" },
+		{ "<leader>hp", "<cmd>Gitsigns preview_hunk<cr>", desc = "Preview Hunk" },
 	},
 }
