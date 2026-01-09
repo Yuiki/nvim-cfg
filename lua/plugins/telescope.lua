@@ -30,6 +30,17 @@ return {
 				"--column",
 				"--smart-case",
 				"--hidden",
+				"--glob=!**/.git/*",
+				"--glob=!**/node_modules/*",
+			},
+			file_ignore_patterns = {
+				"^.git/",
+				"node_modules/",
+			},
+		},
+		pickers = {
+			find_files = {
+				hidden = true,
 			},
 		},
 	},

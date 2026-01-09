@@ -12,8 +12,18 @@ return {
 			custom = { "^.git$" },
 			git_ignored = false,
 		},
+		git = {
+			enable = true,
+			ignore = false,
+		},
 		renderer = {
 			group_empty = true,
+			highlight_git = true,
+			icons = {
+				show = {
+					git = true,
+				},
+			},
 		},
 	},
 	keys = {
