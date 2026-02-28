@@ -16,6 +16,7 @@ return {
 			"kotlin",
 			"markdown",
 			"markdown_inline",
+			"typespec",
 		},
 		sync_install = false,
 		highlight = { enable = true },

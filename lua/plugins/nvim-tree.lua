@@ -9,7 +9,7 @@ return {
 			enable = true,
 		},
 		filters = {
-			custom = { "^.git$" },
+			custom = { "^.git$", "^.DS_Store$" },
 			git_ignored = false,
 		},
 		git = {

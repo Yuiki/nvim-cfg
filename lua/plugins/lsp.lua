@@ -10,6 +10,7 @@ return {
 			"terraformls",
 			"kotlin_lsp",
 			"cssls",
+			"tsp_server",
 		},
 	},
 	dependencies = {
@@ -23,7 +24,7 @@ return {
 	},
 	config = function(_, opts)
 		-- Setup additional LSP keymaps (complement Neovim 0.10+ defaults)
-		-- Defaults: grn (rename), gra (code action), grr (references), gri (implementation)
+		-- Defaults: grn (rename), gra (code action)
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspKeymaps", {}),
 			callback = function(event)
@@ -33,8 +34,6 @@ return {
 
 				-- Additional LSP actions (not in defaults)
 				map("K", vim.lsp.buf.hover, "Hover Documentation")
-				map("gd", vim.lsp.buf.definition, "Goto Definition")
-				map("gt", vim.lsp.buf.type_definition, "Goto Type Definition")
 
 				-- Diagnostics navigation
 				map("[e", vim.diagnostic.goto_prev, "Previous Diagnostic")

@@ -7,12 +7,21 @@ return {
 			border = {
 				enable = true,
 			},
+			hooks = {
+				before_open = function(results, open, jump, method)
+					if #results == 1 then
+						jump(results[1])
+						return false
+					end
+					return true
+				end,
+			},
 		})
 	end,
 	keys = {
-		{ "gD", "<cmd>Glance definitions<cr>", desc = "Peek Definition" },
-		{ "gY", "<cmd>Glance type_definitions<cr>", desc = "Peek Type Definition" },
+		{ "gd", "<cmd>Glance definitions<cr>", desc = "Peek Definition" },
+		{ "gt", "<cmd>Glance type_definitions<cr>", desc = "Peek Type Definition" },
 		{ "gR", "<cmd>Glance references<cr>", desc = "Peek References" },
-		{ "gM", "<cmd>Glance implementations<cr>", desc = "Peek Implementation" },
+		{ "gri", "<cmd>Glance implementations<cr>", desc = "Peek Implementation" },
 	},
 }
